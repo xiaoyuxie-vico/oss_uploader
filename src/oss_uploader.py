@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 """
-Created on 2018-12-31 18:11:59
+Created on  2019-01-01 17:03:03
 @author: Xiaoyu Xie
 @email: xiaoyuxie.vico@gmail.com
 """
@@ -10,7 +10,6 @@ import os
 import time
 
 import oss2
-import json
 from AppKit import NSPasteboard, NSPasteboardTypePNG, NSFilenamesPboardType
 
 
@@ -24,6 +23,10 @@ class Uploader(object):
         self.access_key_secret = kargs.get('access_key_secret', None)
         self.bucket_name = kargs.get('bucket_name', None)
         self.endpoint = kargs.get('endpoint', None)
+        if kargs.get('image_name'):
+            self.image_name = '{}.jpg'.format(kargs['image_name'])
+        else:
+            self.image_name = '{}.jpg'.format(int(time.time()))
 
     def connect(self):
         """
@@ -33,7 +36,7 @@ class Uploader(object):
         self.bucket = oss2.Bucket(self.auth, self.endpoint, self.bucket_name)
 
     @staticmethod
-    def save_clipboard_data():
+    def save_clipboard_data(image_name):
         """
         save clipboard data to local umage
         """
@@ -43,18 +46,17 @@ class Uploader(object):
         if NSPasteboardTypePNG in data_type:
             data = pb.dataForType_(NSPasteboardTypePNG)
             # using time to name the image
-            file_name = '{}.png'.format(int(time.time()))
-            file_path = os.path.join('/tmp', file_name)
-            ret = data.writeToFile_atomically_(file_path, False)
-            # if save right return file_path
+            image_path = os.path.join('/tmp', image_name)
+            ret = data.writeToFile_atomically_(image_path, False)
+            # if save right return image_path
             if ret:
-                return file_path
+                return image_path
         elif NSFilenamesPboardType in data_type:
             # file in machine
             return pb.propertyListForType_(NSFilenamesPboardType)[0]
 
     @staticmethod
-    def parser_image_name(image_name):
+    def parser_path_in_oss(image_name):
         """
         save image in oss based on date, return image_path in oss
         Example: save images on oss based on time
@@ -64,28 +66,37 @@ class Uploader(object):
         return image_path_oss
 
     @staticmethod
-    def parser_url_result(url):
+    def parser_results(url):
         """
-        parser url result for Alfred
+        parse results for workflow
         """
-        data = {
-            'items': [
-                {'title': 'Single url', 'arg': url, "icon":
-                    {
-                        'type': 'png',
-                        'path': 'icon.png'
-                    }
-                 },
-                {'title': 'Url for markdown', 'arg': '![](%s)' % url, 'icon':
-                    {
-                        'type': 'png',
-                        'path': 'icon.png'
-                    }
-                 }
-            ]
+        base = {
+            "icon": {
+                'type': 'png',
+                'path': 'icon.png'
+            }
         }
-        url_result = json.dumps(data)
-        return url_result
+
+        items_1 = {
+            'title': 'Single url',
+            'subtitle': 'Upload',
+            'valid': True,
+            'uid': url,
+            'arg': url,
+        }
+        items_2 = {
+            'title': 'Url in markdown format',
+            'subtitle': 'Upload',
+            'valid': True,
+            'uid': url,
+            'arg': '![]({})'.format(url),
+        }
+
+        for item in [items_1, items_2]:
+            item.update(base)
+
+        results = [items_1, items_2]
+        return results
 
     def upload(self, image_path_local=None):
         """
@@ -95,25 +106,23 @@ class Uploader(object):
 
         # get image path
         if not image_path_local:
-            image_path_local = self.save_clipboard_data()
-        image_name = os.path.basename(image_path_local)
-        image_path_oss = self.parser_image_name(image_name)
+            image_path_local = self.save_clipboard_data(self.image_name)
+
+        image_path_oss = self.parser_path_in_oss(self.image_name)
 
         # upload to oss
-        result = self.bucket.put_object_from_file(
+        ret = self.bucket.put_object_from_file(
             image_path_oss, image_path_local)
 
-        url = result.resp.response.url
-        url_result = self.parser_url_result(url)
-        print(url_result)
+        url = ret.resp.response.url
+        results = self.parser_results(url)
+        return results
 
 
 if __name__ == '__main__':
-    kargs = {
-        'access_key_id': '<你的AccessKeyId>',
-        'access_key_secret': '<你的AccessKeySecret>',
-        'bucket_name': '<你的Bucket名>',
-        'endpoint': 'http://oss-cn-hangzhou.aliyuncs.com',  # example
-    }
-    uploader = Uploader(**kargs)
+    # test
+    import sys
+    from settings_self import OSS_INFO
+    # OSS_INFO['image_name'] = sys.argv[1]
+    uploader = Uploader(**OSS_INFO)
     uploader.upload()

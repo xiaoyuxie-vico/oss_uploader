@@ -1,50 +1,44 @@
-# 使用Alfred上传图片到阿里OSS
+# Upload image to Ali OSS in Alfred. （使用Alfred上传图片到阿里OSS）
 
-由于七牛云不能使用而改用阿里云，迫切需要使用Alfred来简化上传图片到阿里oss然后获得url的过程，参考[CQHui的oss_upload项目](https://github.com/CQHui/oss_upload/blob/master/clipboard_data.py)重构了相关代码。
+![passing](https://img.shields.io/badge/build-passing-brightgreen.svg) ![version](https://img.shields.io/badge/version-1.0.1-brightgreen.svg) ![python](https://img.shields.io/badge/python-2.7-blue.svg)
 
-## 环境
-- Mac OS
-- python 2.7
+The **oss_uploader** is an [Alfred](https://www.alfredapp.com) Workflow plugin for uploading images to Ali OSS.
 
+[Demo in Youtube](https://youtu.be/FFC_sS3WoGo)
 
-## 功能
-- 上传剪切板中的图片到oss，获得url或者markdown的url格式（2018.12.31）；
-- 待补充：
-    - 上传本地文件；
-    - 重命名文件；
-    - 修改保存在oss的路径；
+## 1. Download
 
-## 使用方法
+You can download the latest version in [Github releases page](https://github.com/xiaoyuxie-vico/oss_uploader/release).
 
-1. 下载代码到本地：
+## 2. Usage
+
+### 2.1 Set the basic config in `setting.py`
+You should set your own information in these codes:
 ```
-git clone https://github.com/xiaoyuxie-vico/oss_uploader.git
-```
+# Define Global Variables
+UPDATE_SETTINGS = {'github_slug': 'xiaoyuxie-vico/oss_uploader'}      # example
+HELP_URL = 'https://github.com/xiaoyuxie-vico/oss_uploader/issues'    # example
 
-2. 进入`oss_uploader`文件夹，双击`oss.alfredworkflow`；
-
-3. 进入`oss_uploader`文件夹，修改`oss_uploader.py`中的配置信息，包括：
-```
-kargs = {
-    'access_key_id': '<你的AccessKeyId>',
-    'access_key_secret': '<你的AccessKeySecret>',
-    'bucket_name': '<你的Bucket名>',
-    'endpoint': 'http://oss-cn-hangzhou.aliyuncs.com',  # example
+# oss info
+OSS_INFO = {
+    'access_key_id': 'your_access_key_id',
+    'access_key_secret': 'your_access_key_secret',
+    'bucket_name': 'your_bucket_name',
+    'endpoint': 'http://oss-cn-XXX.aliyuncs.com',
 }
-```
-可以参考阿里官方链接[如何获取AccessKeyId和AccessKeySecret
-](https://help.aliyun.com/knowledge_detail/48699.html)查找自己的相关信息。
 
-4. 进入`Alfred`的`workflow`中的`oss`，双击`oss`进入脚本路径设置，配置如下：
-```
-python /PATH/oss_uploader/oss_uploader.py
 ```
 
-5. 截图保存到剪切版，可以使用[截图(Jietu)-快速标注、便捷分享的截屏工具](https://itunes.apple.com/cn/app/%E6%88%AA%E5%9B%BE-jietu-%E5%BF%AB%E9%80%9F%E6%A0%87%E6%B3%A8-%E4%BE%BF%E6%8D%B7%E5%88%86%E4%BA%AB%E7%9A%84%E6%88%AA%E5%B1%8F%E5%B7%A5%E5%85%B7/id1059334054?mt=12)进行操作；
+### 2.2 General Search
 
-5. 使用快捷键如`option + space`进入`Aflred`，输入`oss`如一切正常会显示`上传ing`，之后选择`Single url`或者`Url for markdown`获取需要的格式，详细如下：
-    - `Single url`: url;
-    - `Url for markdown`: ![](url)
+Try keyword `oss image_name` to upload.
 
-## 其他
-后续功能还会完善，如有疑问可联系xiaoyuxie.vico@gmail.com
+## 3. Functions (updating)
+- Upload clipboard image data to Ali OSS;
+- Rename the image name before upload;
+- [TODO] Reduce the image size before upload;
+- [TODO] Upload the local image (single or in batch);
+
+## Acknowledgement
+
+This Alfred Workflow plugin is developed based on [deanishe/alfred-workflow](https://github.com/deanishe/alfred-workflow) and [TooSchoolForCool/LeetCode-Search](https://github.com/TooSchoolForCool/LeetCode-Search). Thanks for this great helper library.

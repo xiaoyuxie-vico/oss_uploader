@@ -1,17 +1,9 @@
-oss_uploader_self.py
-log/
-logs*/
-.DS_Store
-*.txt
-*.log
-*.caffemodel
-*.zip
-
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*self*
+.DS_Store
 
 # C extensions
 *.so
@@ -33,26 +25,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-__pycache__/
-*.py[cod]
-.idea/
-# C extensions
-*.so
-.idea/inspectionProfiles/
-# Datebase
-*.sqlite3
-*.caffemodel
-logs/
-
-# Distribution / packaging
-bak/
-.DS_Store
-.vscode/
-uwsgi.ini
-uwsgi.pid
-*.log
-*.log.*
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -74,6 +47,7 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.pytest_cache/
 
 # Translations
 *.mo
@@ -82,6 +56,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
+db.sqlite3
 
 # Flask stuff:
 instance/
@@ -114,6 +89,8 @@ celerybeat-schedule
 env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -127,14 +104,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-
-__pycache__/
-*.py[cod]
-.idea/
-# C extensions
-*.so
-.idea/inspectionProfiles/
-# Datebase
-*.sqlite3
-*.caffemodel
-logs/
