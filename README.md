@@ -8,7 +8,7 @@ The **oss_uploader** is an [Alfred](https://www.alfredapp.com) Workflow plugin f
 
 ## 1. Download
 
-You can download the latest version in [Github releases page](https://github.com/xiaoyuxie-vico/oss_uploader/release).
+You can download the latest version in [Github releases page](https://github.com/xiaoyuxie-vico/oss_uploader).
 
 ## 2. Usage
 
