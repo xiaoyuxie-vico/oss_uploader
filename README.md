@@ -4,6 +4,7 @@
 
 The **oss_uploader** is an [Alfred](https://www.alfredapp.com) Workflow plugin for uploading images to Ali OSS.
 
+![demo](docs/demo.gif)
 [Demo in Youtube](https://youtu.be/FFC_sS3WoGo)
 
 ## 1. Download
