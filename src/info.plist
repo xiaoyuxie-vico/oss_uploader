@@ -29,7 +29,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>AliOssUploader_</string>
+	<string>AliOssUploader</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -54,7 +54,7 @@
 				<key>runningsubtext</key>
 				<string>Fetching results…</string>
 				<key>script</key>
-				<string>/Users/momo/anaconda2/bin/python run_self.py --clipboard "{query}"</string>
+				<string>python run.py --clipboard "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
