@@ -6,6 +6,9 @@ Created on 2019-01-01 17:03:03
 @email: xiaoyuxie.vico@gmail.com
 """
 
+import tinify
+import traceback
+
 
 def parser_results(url):
     items_1 = {
@@ -40,3 +43,17 @@ def parser_args(argv):
     args["query"] = argv[1].lower()
 
     return args
+
+
+def compress_image(image_path, out_path, key):
+    """
+    Compress the local image, return saved_image (local path)
+    """
+    tinify.key = key
+    try:
+        source = tinify.from_file(image_path)
+        source.to_file(out_path)
+        return out_path
+    except:
+        traceback.print_exc()
+        return False

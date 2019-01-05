@@ -27,7 +27,7 @@
 	<key>description</key>
 	<string>Upload image to Ali OSS</string>
 	<key>disabled</key>
-	<true/>
+	<false/>
 	<key>name</key>
 	<string>AliOssUploader</string>
 	<key>objects</key>

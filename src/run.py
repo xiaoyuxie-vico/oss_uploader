@@ -8,19 +8,22 @@ Created on  2019-01-01 17:03:03
 
 import json
 import sys
+import time
 import traceback
 
 from oss_uploader import Uploader
 from utils import parser_args
-from settings import UPDATE_SETTINGS, HELP_URL, OSS_INFO
 from workflow import Workflow
+from settings import UPDATE_SETTINGS
+from settings import HELP_URL
+from settings import OSS_INFO
 
 
 def main(wf):
     args = parser_args(wf.args)
     if 'query' in args:
         image_name = args["query"]
-        OSS_INFO['image_name'] = image_name
+        OSS_INFO['image_name'] = '_'.join(str(int(time.time())), image_name)
 
     uploader = Uploader(**OSS_INFO)
 
