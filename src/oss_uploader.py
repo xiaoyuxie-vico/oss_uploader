@@ -55,8 +55,11 @@ class Uploader(object):
 
             image_path_compress = os.path.join('/tmp', image_name)
             # compress image
-            compress_image(image_path_uncompress,
-                           image_path_compress, TINIFY_KEY)
+            if self.is_compress:
+                compress_image(image_path_uncompress,
+                               image_path_compress, TINIFY_KEY)
+            else:
+                image_path_compress = image_path_uncompress
 
             # if save right return image_path_compress
             if ret:
