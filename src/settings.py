@@ -9,3 +9,6 @@ OSS_INFO = {
     'bucket_name': 'your_bucket_name',
     'endpoint': 'http://oss-cn-XXX.aliyuncs.com',
 }
+
+# tinyjpg.com API
+TINIFY_KEY = 'your_tinify_key'
