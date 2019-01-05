@@ -12,6 +12,9 @@ import time
 import oss2
 from AppKit import NSPasteboard, NSPasteboardTypePNG, NSFilenamesPboardType
 
+from settings_self import TINIFY_KEY
+from utils import compress_image
+
 
 class Uploader(object):
     """
@@ -23,6 +26,8 @@ class Uploader(object):
         self.access_key_secret = kargs.get('access_key_secret', None)
         self.bucket_name = kargs.get('bucket_name', None)
         self.endpoint = kargs.get('endpoint', None)
+        # default to compress the image
+        self.is_compress = kargs.get('is_compress', True)
         if kargs.get('image_name'):
             self.image_name = '{}.jpg'.format(kargs['image_name'])
         else:
@@ -45,12 +50,17 @@ class Uploader(object):
 
         if NSPasteboardTypePNG in data_type:
             data = pb.dataForType_(NSPasteboardTypePNG)
-            # using time to name the image
-            image_path = os.path.join('/tmp', image_name)
-            ret = data.writeToFile_atomically_(image_path, False)
-            # if save right return image_path
+            image_path_uncompress = os.path.join('/tmp', 'temp_' + image_name)
+            ret = data.writeToFile_atomically_(image_path_uncompress, False)
+
+            image_path_compress = os.path.join('/tmp', image_name)
+            # compress image
+            compress_image(image_path_uncompress,
+                           image_path_compress, TINIFY_KEY)
+
+            # if save right return image_path_compress
             if ret:
-                return image_path
+                return image_path_compress
         elif NSFilenamesPboardType in data_type:
             # file in machine
             return pb.propertyListForType_(NSFilenamesPboardType)[0]
