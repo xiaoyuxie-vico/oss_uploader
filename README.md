@@ -36,9 +36,9 @@ OSS_INFO = {
 Try keyword `oss image_name` to upload.
 
 ## 3. Functions (updating)
-- Upload clipboard image data to Ali OSS;
-- Rename the image name before upload;
-- [TODO] Reduce the image size before upload;
+- Upload clipboard image data to Ali OSS (v1.0.1);
+- Rename the image name before upload (v1.0.1);
+- Reduce the image size before upload (Using [TinyJPG](https://tinyjpg.com)) (v1.0.2);
 - [TODO] Upload the local image (single or in batch);
 
 ## Acknowledgement
