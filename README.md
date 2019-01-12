@@ -18,8 +18,8 @@ You can download the latest version in [Github releases page](https://github.com
 You should set your own information in these codes:
 ```
 # Define Global Variables
-UPDATE_SETTINGS = {'github_slug': 'xiaoyuxie-vico/oss_uploader'}      # example
-HELP_URL = 'https://github.com/xiaoyuxie-vico/oss_uploader/issues'    # example
+UPDATE_SETTINGS = {'github_slug': 'xiaoyuxie-vico/oss_uploader'}
+HELP_URL = 'https://github.com/xiaoyuxie-vico/oss_uploader/issues'
 
 # oss info
 OSS_INFO = {
@@ -29,6 +29,8 @@ OSS_INFO = {
     'endpoint': 'http://oss-cn-XXX.aliyuncs.com',
 }
 
+# tinyjpg.com API
+TINIFY_KEY = 'your_tinify_key'
 ```
 
 ### 2.2 General Search
@@ -40,6 +42,7 @@ Try keyword `oss image_name` to upload.
 - Rename the image name before upload (v1.0.1);
 - Reduce the image size before upload (Using [TinyJPG](https://tinyjpg.com)) (v1.0.2);
 - [TODO] Upload the local image (single or in batch);
+- [TODO] Fix rename image error;
 
 ## Acknowledgement
 
